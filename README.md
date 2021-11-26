@@ -31,3 +31,8 @@ To start server at `http://localhost:3000/`:
 ```
 bin/rails server
 ```
+
+## Entity-relationship diagram
+
+![](https://i.imgur.com/w1YzNY6.png)
+
