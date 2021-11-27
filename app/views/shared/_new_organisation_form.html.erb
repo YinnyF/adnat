@@ -1,3 +1,5 @@
+<h2>Create organisation</h2>
+
 <%= form_with(model: organisation) do |form| %>
   <% if organisation.errors.any? %>
     <div id="error_explanation">
@@ -12,16 +14,16 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name, "Name:" %>
+    <%= form.label :name, 'Name:' %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :hourly_rate, "Hourly Rate: $" %>
-    <%= form.text_field :hourly_rate %> per hour
+    <%= form.label :hourly_rate, 'Hourly rate: $' %>
+    <%= form.text_field :hourly_rate %>
   </div>
 
   <div class="actions">
-    <%= form.submit "Update" %>
+    <%= form.submit 'Create and Join'%>
   </div>
 <% end %>

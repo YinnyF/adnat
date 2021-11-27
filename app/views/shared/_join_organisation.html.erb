@@ -1,0 +1,19 @@
+    <p>You aren't a member of any organisations.<br>
+    Join an existing one or create a new one.</p>
+
+    <h2>Organisations</h2>
+
+    <% if @organisations.empty? %>
+      <p>There aren't any organisations, please create a new one.</p>
+    <% end %>
+
+    <ul>
+      <% @organisations.each do |organisation| %>
+        <li>
+        <%= organisation.name %>
+        <%= link_to 'Edit', edit_organisation_path(organisation) %>
+        <%= link_to 'Destroy', organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </li>
+      <% end %>
+    </ul>
+

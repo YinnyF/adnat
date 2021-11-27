@@ -1,3 +1,12 @@
-<% if !current_user %>
+<% if current_user %>
+
+  <% if current_user.organisation %>
+    Belongs to an Organisation
+  <% else %>
+    <%= render 'shared/join_organisation' %>
+    <%= render 'shared/new_organisation_form', organisation: @organisation %>
+  <% end %>
+
+<% else %>
   <%= render 'shared/login' %>
 <% end %>

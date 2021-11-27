@@ -25,7 +25,7 @@ class OrganisationsController < ApplicationController
 
     respond_to do |format|
       if @organisation.save
-        format.html { redirect_to @organisation, notice: "Organisation was successfully created." }
+        format.html { redirect_to root_path, notice: "Organisation was successfully created." }
         format.json { render :show, status: :created, location: @organisation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,20 +38,22 @@ class OrganisationsController < ApplicationController
   def update
     respond_to do |format|
       if @organisation.update(organisation_params)
-        format.html { redirect_to @organisation, notice: "Organisation was successfully updated." }
+        format.html { redirect_to root_path, notice: "Organisation was successfully updated." }
         format.json { render :show, status: :ok, location: @organisation }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @organisation.errors, status: :unprocessable_entity }
       end
     end
+
+    organisation = @organisation
   end
 
   # DELETE /organisations/1 or /organisations/1.json
   def destroy
     @organisation.destroy
     respond_to do |format|
-      format.html { redirect_to organisations_url, notice: "Organisation was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "Organisation was successfully destroyed." }
       format.json { head :no_content }
     end
   end
