@@ -1,6 +1,7 @@
 <% if current_user %>
 
-  <% if current_user.organisation %>
+<%# define logic for whether they belong to an organisation or not (is there a membership?) %>
+  <% if false %>
     Belongs to an Organisation
   <% else %>
     <%= render 'shared/join_organisation' %>
