@@ -1,5 +1,7 @@
 class ShiftsController < ApplicationController
   before_action :set_shift, only: %i[ show edit update destroy ]
+  # user must be logged in to do anything with shifts
+  before_action :authenticate_user!
 
   # GET /shifts or /shifts.json
   def index
@@ -22,6 +24,7 @@ class ShiftsController < ApplicationController
   # POST /shifts or /shifts.json
   def create
     @shift = Shift.new(shift_params)
+    @shift.user = current_user
 
     respond_to do |format|
       if @shift.save
@@ -64,6 +67,6 @@ class ShiftsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def shift_params
-      params.require(:shift).permit(:start, :finish, :break_length, :user_id)
+      params.require(:shift).permit(:start, :finish, :break_length)
     end
 end
