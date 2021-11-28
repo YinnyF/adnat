@@ -6,6 +6,7 @@ class ShiftsController < ApplicationController
   # GET /shifts or /shifts.json
   def index
     @shifts = Shift.all
+    @shift = Shift.new
   end
 
   # GET /shifts/1 or /shifts/1.json
@@ -28,7 +29,7 @@ class ShiftsController < ApplicationController
 
     respond_to do |format|
       if @shift.save
-        format.html { redirect_to @shift, notice: "Shift was successfully created." }
+        format.html { redirect_to shifts_path, notice: "Shift was successfully created." }
         format.json { render :show, status: :created, location: @shift }
       else
         format.html { render :new, status: :unprocessable_entity }

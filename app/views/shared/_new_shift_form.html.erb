@@ -1,0 +1,34 @@
+<tfoot>
+  <%= form_with(model: shift) do |form| %>
+    <% if shift.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
+
+        <ul>
+          <% shift.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <td><%= current_user.name %></td>
+
+    <td><div class="field">
+      <%= form.datetime_select :start %>
+    </div></td>
+
+    <td><div class="field">
+      <%= form.datetime_select :finish %>
+    </div></td>
+
+    <th><div class="field">
+      <%= form.number_field :break_length %>
+    </div></th>
+
+    <td><div class="actions">
+      <%= form.submit %>
+    </div></td>
+    
+  <% end %>
+</tfoot>
