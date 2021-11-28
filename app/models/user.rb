@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_one :membership
   has_one :organisation, :through => :membership
   
+  has_many :shifts
 end
