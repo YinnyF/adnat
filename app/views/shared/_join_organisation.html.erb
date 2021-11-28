@@ -12,7 +12,7 @@
         <li>
         <%= organisation.name %>
         <%= link_to 'Edit', edit_organisation_path(organisation) %>
-        <%= link_to 'Join', organisation_join_path(organisation), method: :post %>
+        <%= link_to 'Join', organisation_memberships_path(organisation.id), method: :post %>
         <%= link_to 'Destroy', organisation, method: :delete, data: { confirm: 'Are you sure?' } %>
         </li>
       <% end %>

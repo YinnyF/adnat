@@ -25,6 +25,8 @@ class OrganisationsController < ApplicationController
 
     respond_to do |format|
       if @organisation.save
+        join(@organisation)
+
         format.html { redirect_to root_path, notice: "Organisation was successfully created." }
         format.json { render :show, status: :created, location: @organisation }
       else
@@ -67,5 +69,12 @@ class OrganisationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def organisation_params
       params.require(:organisation).permit(:name, :hourly_rate)
+    end
+
+    def join(organisation)
+      @membership = Membership.new(user_id: current_user.id, organisation_id: organisation.id)
+      
+      # TODO: what if they already belong to an org?
+      @membership.save
     end
 end

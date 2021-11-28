@@ -8,7 +8,7 @@ RSpec.describe "organisations/index", type: :view do
         hourly_rate: "9.99"
       ),
       Organisation.create!(
-        name: "Name",
+        name: "Name 2",
         hourly_rate: "9.99"
       )
     ])
@@ -16,7 +16,8 @@ RSpec.describe "organisations/index", type: :view do
 
   it "renders a list of organisations" do
     render
-    assert_select "tr>td", text: "Name".to_s, count: 2
+    assert_select "tr>td", text: "Name".to_s, count: 1
+    assert_select "tr>td", text: "Name 2".to_s, count: 1
     assert_select "tr>td", text: "9.99".to_s, count: 2
   end
 end

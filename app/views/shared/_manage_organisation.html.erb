@@ -1,0 +1,5 @@
+<h2><%= current_user.membership.organisation.name %></h2>
+
+<%= link_to 'View Shifts', root_path %>
+<%= link_to 'Edit', edit_organisation_path(current_user.membership.organisation_id) %>
+<%= link_to 'Leave', organisation_membership_path(current_user.membership.organisation_id, current_user.membership.id), method: :delete, data: { confirm: 'Are you sure you want to leave?' } %>
