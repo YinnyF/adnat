@@ -19,6 +19,8 @@ class MembershipsController < ApplicationController
     @membership = current_user.membership
 
     if @membership.destroy
+      delete_all_shifts
+
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Successfully left the organisation." }
         format.json { head :no_content }
@@ -29,6 +31,10 @@ class MembershipsController < ApplicationController
   private
     def set_organisation
       @organisation = Organisation.find(params[:organisation_id])
+    end
+
+    def delete_all_shifts
+      Shift.where(user_id: current_user.id).delete_all
     end
 
 end
