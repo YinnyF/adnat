@@ -65,8 +65,8 @@ bin/rails server
 ### Optional exercises
 - ✅  (1) User details: Allow users to change their own name, email address, or password
 - ✅  (9) Functional or Unit tests - **attempted!**
+- ✅  (2) Modifying/Deleting shifts: Allow users to modify or delete their own shifts
 
-- ⬜️  (2) Modifying/Deleting shifts: Allow users to modify or delete existing shifts
 - ⬜️  (3) Departed Employee Shift Storage
 - ⬜️  (4) Filtering shifts
 - ⬜️  (5) Overnight shifts

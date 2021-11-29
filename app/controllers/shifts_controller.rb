@@ -53,8 +53,20 @@ class ShiftsController < ApplicationController
 
   # PATCH/PUT /shifts/1 or /shifts/1.json
   def update
+    # TODO can we refactor this to the model?
+    day_string = "%02i" % shift_params["date(1i)"]
+    month_string = "%02i" % shift_params["date(2i)"]
+
+    date_string = day_string + month_string + shift_params["date(3i)"]
+    start_time_string = shift_params["start(4i)"] + ":" + shift_params["start(5i)"]
+    finish_time_string = shift_params["finish(4i)"] + ":" + shift_params["finish(5i)"]
+    required_dt_format = "%Y%m%dT%H:%M"
+
+    start_dt = DateTime.strptime(date_string + "T" + start_time_string, required_dt_format)
+    finish_dt = DateTime.strptime(date_string + "T" + finish_time_string, required_dt_format)
+
     respond_to do |format|
-      if @shift.update(shift_params)
+      if @shift.update(start: start_dt, finish: finish_dt, break_length: shift_params[:break_length])
         format.html { redirect_to @shift, notice: "Shift was successfully updated." }
         format.json { render :show, status: :ok, location: @shift }
       else

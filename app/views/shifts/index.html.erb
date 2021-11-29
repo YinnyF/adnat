@@ -24,6 +24,7 @@
         <th>Break length (minutes)</th>
         <th>Hours worked</th>
         <th>Shift cost</th>
+        <th>Actions</th>
       </tr>
     </thead>
 
@@ -38,6 +39,10 @@
           <td><%= shift.break_length %></td>
           <td><%= shift.hours_worked %></td>
           <td>$<%= shift.cost %></td>
+          <td><% if shift.user == current_user %>
+            <%= link_to 'Edit', edit_shift_path(shift) %>
+            <%= link_to 'Delete', shift, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %></td>
         </tr>
         <% end %>
       <% end %>
@@ -62,7 +67,7 @@
           <%= form.number_field :break_length, :value => 0 %>
         </div></td>
 
-        <td colspan="2"><div class="actions">
+        <td colspan="3"><div class="actions">
           <%= form.submit %>
         </div></td>
     </tfoot>
