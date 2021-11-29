@@ -25,7 +25,16 @@ class ShiftsController < ApplicationController
 
   # POST /shifts or /shifts.json
   def create
-    @shift = Shift.new(shift_params)
+    # TODO can we refactor this to the model?
+    date_string = shift_params["date(1i)"] + shift_params["date(2i)"] + shift_params["date(3i)"]
+    start_time_string = shift_params["start(4i)"] + ":" + shift_params["start(5i)"]
+    finish_time_string = shift_params["finish(4i)"] + ":" + shift_params["finish(5i)"]
+    required_dt_format = "%Y%m%dT%H:%M"
+
+    start_dt = DateTime.strptime(date_string + "T" + start_time_string, required_dt_format)
+    finish_dt = DateTime.strptime(date_string + "T" + finish_time_string, required_dt_format)
+
+    @shift = Shift.new(start: start_dt, finish: finish_dt, break_length: shift_params[:break_length])
     @shift.user = current_user
 
     respond_to do |format|
@@ -69,7 +78,7 @@ class ShiftsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def shift_params
-      params.require(:shift).permit(:start, :finish, :break_length)
+      params.require(:shift).permit(:date, :start, :finish, :break_length)
     end
 
     def redirect_if_no_org

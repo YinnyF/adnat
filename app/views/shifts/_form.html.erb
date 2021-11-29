@@ -12,16 +12,24 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
     <%= form.label :start %>
-    <%= form.datetime_select :start %>
+    <%= form.time_select :start, :ignore_date => true%>
   </div>
 
   <div class="field">
     <%= form.label :finish %>
-    <%= form.datetime_select :finish %>
+    <%= form.time_select :finish, :ignore_date => true %>
   </div>
 
-
+  <div class="field">
+    <%= form.label :break_length %>
+    <%= form.number_field :break_length %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

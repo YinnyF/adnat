@@ -14,18 +14,22 @@
   <td><%= current_user.name %></td>
 
   <td><div class="field">
-    <%= form.datetime_select :start %>
+    <% form.date_select :date %>
   </div></td>
 
   <td><div class="field">
-    <%= form.datetime_select :finish %>
+    <%= form.time_select :start, :ignore_date => true %>
+  </div></td>
+
+  <td><div class="field">
+    <%= form.time_select :finish, :ignore_date => true %>
   </div></td>
 
   <td><div class="field">
     <%= form.number_field :break_length %>
   </div></td>
 
-  <td><div class="actions">
+  <td colspan="2"><div class="actions">
     <%= form.submit %>
   </div></td>
   

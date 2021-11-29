@@ -5,9 +5,8 @@ class Shift < ApplicationRecord
     self.user.name
   end
 
-  def date
-    date = parse_start
-    date.strftime("%d/%m/%Y")
+  def shift_date
+    parse_start.strftime("%d/%m/%Y")
   end
 
   def start_time
