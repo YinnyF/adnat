@@ -2,6 +2,7 @@ class ShiftsController < ApplicationController
   before_action :set_shift, only: %i[ show edit update destroy ]
   # user must be logged in to do anything with shifts
   before_action :authenticate_user!
+  before_action :redirect_if_no_org
 
   # GET /shifts or /shifts.json
   def index
@@ -69,5 +70,11 @@ class ShiftsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def shift_params
       params.require(:shift).permit(:start, :finish, :break_length)
+    end
+
+    def redirect_if_no_org
+      if !current_user.membership
+        redirect_to root_path
+      end
     end
 end
