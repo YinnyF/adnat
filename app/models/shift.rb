@@ -1,6 +1,12 @@
 class Shift < ApplicationRecord
   belongs_to :user
 
+  validates :start, :finish, presence: true
+  validates :break_length, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 720 }
+
+  validate :start_finish_check
+  validate :break_length_check
+  
   def employee_name
     self.user.name
   end
@@ -10,13 +16,11 @@ class Shift < ApplicationRecord
   end
 
   def start_time
-    start = parse_start
-    start.strftime("%I:%M %p")
+    parse_start.strftime("%I:%M %p")
   end
 
   def finish_time
-    finish = parse_finish
-    finish.strftime("%I:%M %p")
+    parse_finish.strftime("%I:%M %p")
   end
 
   def hours_worked
@@ -48,5 +52,29 @@ class Shift < ApplicationRecord
     def hours_worked_unrounded
       # break is defined in minutes
       (shift_length_mins-break_length.to_i)/60
+    end
+
+    def dates_valid
+      begin
+        self.start < self.finish
+      rescue 
+        false
+      end
+    end
+
+    def start_finish_check
+      errors.add(:finish, "Please select a time later than the start time") unless dates_valid
+    end
+
+    def break_valid
+      begin
+        self.break_length <= shift_length_mins
+      rescue
+        false
+      end
+    end
+
+    def break_length_check
+      errors.add(:finish, "Please check the break length") unless break_valid
     end
 end
