@@ -31,10 +31,8 @@
   </tbody>
 
   <tfoot>
-    <% #render 'shared/new_shift_form', shift: @shift %>
+    <%= render 'shared/new_shift_form', shift: @shift %>
   </tfoot>
 </table>
 
 <br>
-
-<%= link_to 'New Shift', new_shift_path %>
