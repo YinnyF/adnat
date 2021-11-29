@@ -4,12 +4,13 @@
 <table>
   <thead>
     <tr>
-      <th>User</th>
-      <th>Start</th>
-      <th>Finish</th>
+      <th>Employee name</th>
+      <th>Shift date</th>
+      <th>Start time</th>
+      <th>Finish time</th>
       <th>Break length (minutes)</th>
-      <th>lorem</th>
-      <%# <th colspan="3"></th> %>
+      <th>Hours worked</th>
+      <th>Shift cost</th>
     </tr>
   </thead>
 
@@ -17,11 +18,13 @@
     <% @shifts.each do |shift| %>
       <% if shift.user.membership.organisation_id == current_user.membership.organisation_id %>
       <tr>
-        <td><%= shift.user_id %></td>
-        <td><%= shift.start %></td>
-        <td><%= shift.finish %></td>
+        <td><%= shift.employee_name %></td>
+        <td><%= shift.date %></td>
+        <td><%= shift.start_time %></td>
+        <td><%= shift.finish_time %></td>
         <td><%= shift.break_length %></td>
-        <td></td>
+        <td><%= shift.hours_worked %></td>
+        <td>$<%= shift.cost %></td>
       </tr>
       <% end %>
     <% end %>
