@@ -48,7 +48,6 @@ class OrganisationsController < ApplicationController
       end
     end
 
-    organisation = @organisation
   end
 
   # DELETE /organisations/1 or /organisations/1.json
