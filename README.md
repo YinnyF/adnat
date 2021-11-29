@@ -36,3 +36,31 @@ bin/rails server
 
 ![](https://i.imgur.com/w1YzNY6.png)
 
+## Specification
+
+- ✅  An unauthenticated user should first be prompted to log in, sign up, or reset their password
+- ✅  Users have names, so "Name" should be a field on your sign up page
+- ✅  After signing up, users should be prompted to join/create an organisation
+- ✅  Users should be able to edit all organisations (i.e. their names and their hourly rates)
+- ✅  Once a user has joined an organisation, the home page should include 'view shifts', 'edit', 'leave' actions for the organisation
+- ✅  Leaving an organisation should return the user to the state they are in just after they sign up
+- ✅  Departed user's shifts should be deleted
+- ✅  Shift page should show all shifts that belong to the user and their fellow employees
+- ✅  Shifts are ordered from newest to oldest
+- ✅  Breaks are considered unpaid and are thus subtracted from shift length to determine hours worked 
+- ✅  Shift costs are determined per `shift cost = hours worked * organisation hourly rate`
+- ✅  Creating a new shift for the user that is logged in (inside the table)
+- ✅  Shift date and start time are stored in the same database column as `DateTime`
+
+### Optional exercises
+- ✅  (1) User details: Allow users to change their own name, email address, or password
+- ✅  (9) Functional or Unit tests - **attempted!**
+
+- ⬜️  (2) Modifying/Deleting shifts: Allow users to modify or delete existing shifts
+- ⬜️  (3) Departed Employee Shift Storage
+- ⬜️  (4) Filtering shifts
+- ⬜️  (5) Overnight shifts
+- ⬜️  (6) Penalty rates on Sundays
+- ⬜️  (7) Multiple breaks
+- ⬜️  (8) Multiple organisations
+- ⬜️  (10) JavaScript enhancements
