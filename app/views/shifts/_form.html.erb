@@ -13,22 +13,22 @@
 
   <div class="field">
     <%= form.label :date %>
-    <%= form.date_select :date %>
+    <%= form.date_select :date, use_two_digit_numbers: true, order: [:day, :month, :year] %>
   </div>
 
   <div class="field">
     <%= form.label :start %>
-    <%= form.time_select :start, :ignore_date => true%>
+    <%= form.time_select :start, :ignore_date => true, minute_step: 15 %>
   </div>
 
   <div class="field">
     <%= form.label :finish %>
-    <%= form.time_select :finish, :ignore_date => true %>
+    <%= form.time_select :finish, :ignore_date => true, minute_step: 15 %>
   </div>
 
   <div class="field">
     <%= form.label :break_length %>
-    <%= form.number_field :break_length %>
+    <%= form.number_field :break_length, :value => 0 %>
   </div>
 
   <div class="actions">
