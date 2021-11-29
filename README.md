@@ -27,6 +27,16 @@ To run tests:
 bundle exec rspec
 ```
 
+To run feature tests only:
+```
+bundle exec rspec spec/features
+```
+
+To run unit tests only:
+```
+bundle exec rspec spec/models
+```
+
 To start server at `http://localhost:3000/`:
 ```
 bin/rails server
