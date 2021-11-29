@@ -41,12 +41,12 @@ class Shift < ApplicationRecord
       DateTime.parse("#{self.finish}")
     end
 
-    def minutes_worked
+    def shift_length_mins
       (finish-start)/60
     end
 
     def hours_worked_unrounded
       # break is defined in minutes
-      (minutes_worked-break_length.to_i)/60
+      (shift_length_mins-break_length.to_i)/60
     end
 end
