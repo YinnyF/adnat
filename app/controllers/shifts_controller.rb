@@ -6,7 +6,7 @@ class ShiftsController < ApplicationController
 
   # GET /shifts or /shifts.json
   def index
-    @shifts = Shift.all
+    @shifts = Shift.order('start desc')
     @shift = Shift.new
   end
 
