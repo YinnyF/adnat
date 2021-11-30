@@ -29,8 +29,7 @@ class Shift < ApplicationRecord
   end
 
   def cost
-    premium = calculate_premium
-    cost = premium + (hours_worked_unrounded * hourly_rate)
+    cost = calculate_sunday_premium + (hours_worked_unrounded * hourly_rate)
     '%.2f' % cost
   end
 
@@ -80,7 +79,7 @@ class Shift < ApplicationRecord
       errors.add(:finish, "Please check the break length") unless break_valid
     end
 
-    def calculate_premium
+    def calculate_sunday_premium
       if self.start.sunday? && self.finish.sunday? 
         hours_worked_unrounded * hourly_rate
       elsif self.start.sunday?
