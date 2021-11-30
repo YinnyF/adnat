@@ -1,5 +1,5 @@
 class ShiftsController < ApplicationController
-  before_action :set_shift, only: %i[ show edit update destroy ]
+  before_action :set_shift, only: %i[show edit update destroy]
   # user must be logged in to do anything with shifts
   before_action :authenticate_user!
   before_action :redirect_if_no_org
@@ -30,14 +30,14 @@ class ShiftsController < ApplicationController
     month_string = "%02i" % shift_params["date(2i)"]
 
     date_string = day_string + month_string + shift_params["date(3i)"]
-    start_time_string = shift_params["start(4i)"] + ":" + shift_params["start(5i)"]
-    finish_time_string = shift_params["finish(4i)"] + ":" + shift_params["finish(5i)"]
+    start_time_string = "#{shift_params["start(4i)"]}:#{shift_params["start(5i)"]}"
+    finish_time_string = "#{shift_params["finish(4i)"]}:#{shift_params["finish(5i)"]}"
     required_dt_format = "%Y%m%dT%H:%M"
 
-    start_dt = DateTime.strptime(date_string + "T" + start_time_string, required_dt_format)
-    finish_dt = DateTime.strptime(date_string + "T" + finish_time_string, required_dt_format)
+    start_dt = DateTime.strptime("#{date_string}T#{start_time_string}", required_dt_format)
+    finish_dt = DateTime.strptime("#{date_string}T#{finish_time_string}", required_dt_format)
 
-    finish_dt = finish_dt + 1.day if start_dt > finish_dt 
+    finish_dt += 1.day if start_dt > finish_dt 
 
     @shift = Shift.new(start: start_dt, finish: finish_dt, break_length: shift_params[:break_length])
     @shift.user = current_user
@@ -60,14 +60,14 @@ class ShiftsController < ApplicationController
     month_string = "%02i" % shift_params["date(2i)"]
 
     date_string = day_string + month_string + shift_params["date(3i)"]
-    start_time_string = shift_params["start(4i)"] + ":" + shift_params["start(5i)"]
-    finish_time_string = shift_params["finish(4i)"] + ":" + shift_params["finish(5i)"]
+    start_time_string = "#{shift_params["start(4i)"]}:#{shift_params["start(5i)"]}"
+    finish_time_string = "#{shift_params["finish(4i)"]}:#{shift_params["finish(5i)"]}"
     required_dt_format = "%Y%m%dT%H:%M"
 
-    start_dt = DateTime.strptime(date_string + "T" + start_time_string, required_dt_format)
-    finish_dt = DateTime.strptime(date_string + "T" + finish_time_string, required_dt_format)
+    start_dt = DateTime.strptime("#{date_string}T#{start_time_string}", required_dt_format)
+    finish_dt = DateTime.strptime("#{date_string}T#{finish_time_string}", required_dt_format)
 
-    finish_dt = finish_dt + 1.day if start_dt > finish_dt 
+    finish_dt += 1.day if start_dt > finish_dt 
 
     respond_to do |format|
       if @shift.update(start: start_dt, finish: finish_dt, break_length: shift_params[:break_length])
@@ -101,8 +101,6 @@ class ShiftsController < ApplicationController
     end
 
     def redirect_if_no_org
-      if !current_user.membership
-        redirect_to root_path
-      end
+      redirect_to root_path unless current_user.membership
     end
 end

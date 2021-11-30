@@ -6,10 +6,10 @@ class MembershipsController < ApplicationController
     @membership = Membership.new(user_id: current_user.id, organisation_id: @organisation.id)
     
     if @membership.save
-        flash[:notice] = "Joined #{@organisation.name}"
+      flash[:notice] = "Joined #{@organisation.name}"
     else
-        # Set up multiple error message handler for rejections/already a member
-        flash[:notice] = "Not able to join organisation."
+      # Set up multiple error message handler for rejections/already a member
+      flash[:notice] = "Not able to join organisation."
     end
 
     redirect_to root_path

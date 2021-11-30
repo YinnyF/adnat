@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Membership, type: :model do
   let(:user) { User.create(name: "Test", email: "test@test.com", password: "123456") }
-  let(:organisation_1) { Organisation.create(name: "Test Org 1", hourly_rate: 12.00 ) }
-  let(:organisation_2) { Organisation.create(name: "Test Org 2", hourly_rate: 12.00 ) }
+  let(:organisation_1) { Organisation.create(name: "Test Org 1", hourly_rate: 12.00) }
+  let(:organisation_2) { Organisation.create(name: "Test Org 2", hourly_rate: 12.00) }
 
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:organisation) }

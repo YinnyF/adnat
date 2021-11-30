@@ -12,7 +12,7 @@ def join_organisation
   click_link 'Join'
 end
 
-def create_shift(day, month, year, s_hour, s_mins, f_hour, f_mins, break_length=0)
+def create_shift(day, month, year, s_hour, s_mins, f_hour, f_mins, break_length = 0)
   select day, :from => 'shift_date_3i'
   select month, :from => 'shift_date_2i'
   select year, :from => 'shift_date_1i'

@@ -8,7 +8,7 @@ class Shift < ApplicationRecord
   validate :break_length_check
   
   def employee_name
-    self.user.name
+    user.name
   end
 
   def shift_date
@@ -29,12 +29,12 @@ class Shift < ApplicationRecord
   end
 
   def sunday_premium_cost
-    if self.start.sunday? && self.finish.sunday? 
+    if start.sunday? && finish.sunday? 
       hours_worked_unrounded * hourly_rate
-    elsif self.start.sunday?
+    elsif start.sunday?
       # if start on sunday and ends overnight
       calculate_sunday_start_premium
-    elsif self.finish.sunday?
+    elsif finish.sunday?
       # if start saturday working overnight into sunday
       calculate_sunday_end_premium
     else
@@ -49,29 +49,29 @@ class Shift < ApplicationRecord
 
   private
     def parse_start
-      DateTime.parse("#{self.start}")
+      DateTime.parse("#{start}")
     end
 
     def parse_finish
-      DateTime.parse("#{self.finish}")
+      DateTime.parse("#{finish}")
     end
 
     def shift_length_mins
-      (finish-start)/60
+      (finish - start) / 60
     end
 
     def hours_worked_unrounded
       # break is defined in minutes
-      (shift_length_mins-break_length.to_i)/60
+      (shift_length_mins - break_length.to_i) / 60
     end
 
     def hourly_rate
-      self.user.membership.organisation.hourly_rate
+      user.membership.organisation.hourly_rate
     end
 
     def dates_valid
       begin
-        self.start < self.finish
+        start < finish
       rescue 
         false
       end
@@ -83,7 +83,7 @@ class Shift < ApplicationRecord
 
     def break_valid
       begin
-        self.break_length <= shift_length_mins
+        break_length <= shift_length_mins
       rescue
         false
       end
@@ -94,7 +94,7 @@ class Shift < ApplicationRecord
     end
 
     def calculate_sunday_start_premium
-      minutes_on_sunday = (self.start.midnight + 1.day - self.start) / 60
+      minutes_on_sunday = (start.midnight + 1.day - start) / 60
 
       if (shift_length_mins - minutes_on_sunday) < break_length
         # reduce minutes on sunday for the break_length
@@ -106,7 +106,7 @@ class Shift < ApplicationRecord
     end
 
     def calculate_sunday_end_premium
-      minutes_on_sunday = (self.finish - self.finish.beginning_of_day) / 60
+      minutes_on_sunday = (finish - finish.beginning_of_day) / 60
 
       if minutes_on_sunday > break_length
         hours_on_sunday = (minutes_on_sunday - break_length) / 60
