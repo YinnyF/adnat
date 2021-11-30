@@ -37,6 +37,8 @@ class ShiftsController < ApplicationController
     start_dt = DateTime.strptime(date_string + "T" + start_time_string, required_dt_format)
     finish_dt = DateTime.strptime(date_string + "T" + finish_time_string, required_dt_format)
 
+    finish_dt = finish_dt + 1.day if start_dt > finish_dt 
+
     @shift = Shift.new(start: start_dt, finish: finish_dt, break_length: shift_params[:break_length])
     @shift.user = current_user
 
@@ -64,6 +66,8 @@ class ShiftsController < ApplicationController
 
     start_dt = DateTime.strptime(date_string + "T" + start_time_string, required_dt_format)
     finish_dt = DateTime.strptime(date_string + "T" + finish_time_string, required_dt_format)
+
+    finish_dt = finish_dt + 1.day if start_dt > finish_dt 
 
     respond_to do |format|
       if @shift.update(start: start_dt, finish: finish_dt, break_length: shift_params[:break_length])

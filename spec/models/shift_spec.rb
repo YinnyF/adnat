@@ -19,6 +19,7 @@ RSpec.describe Shift, type: :model do
   end
 
   it "does not accept invalid finish times" do
+    # TODO: review for overnight shifts that is currently in the controller (this check will never happen)
     shift.finish = DateTime.new(2021,01,01,8,0)
 
     expect(shift).not_to be_valid

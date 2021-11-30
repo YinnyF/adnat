@@ -23,11 +23,11 @@ RSpec.feature "User create shifts", type: :feature do
     expect(page).to have_content("Please check the break length")
   end
 
-  scenario "invalid shift - finish time earlier than start date" do
-    create_shift('07', '02', '2019', '10', '15', '09', '30')
+  scenario "valid shift - finish time earlier than start date is assumed to be overnight" do
+    create_shift('07', '02', '2019', '10', '30', '09', '30')
 
-    expect(page).not_to have_content("Shift was successfully created.")
-    expect(page).to have_content("Please select a time later than the start time")
+    expect(page).to have_content("Shift was successfully created.")
+    expect(page).to have_content("23.00")
   end
 
   scenario "shifts are destroyed when a user leaves an org" do
