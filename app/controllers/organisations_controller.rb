@@ -75,7 +75,6 @@ class OrganisationsController < ApplicationController
     def join(organisation)
       @membership = Membership.new(user_id: current_user.id, organisation_id: organisation.id)
       
-      # TODO: what if they already belong to an org?
       @membership.save
     end
 

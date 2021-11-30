@@ -11,6 +11,7 @@ RSpec.feature "User Edit Account", type: :feature do
     fill_in 'Name', with: new_name
     fill_in 'Current password', with: '123456'
     click_button 'Update'
+
     expect(page).to have_content("Logged in as #{new_name}")
   end
 
@@ -18,6 +19,7 @@ RSpec.feature "User Edit Account", type: :feature do
     fill_in 'Email', with: 'new@test.com'
     fill_in 'Current password', with: '123456'
     click_button 'Update'
+
     expect(page).to have_content("Your account has been updated successfully")
   end
 
@@ -26,6 +28,7 @@ RSpec.feature "User Edit Account", type: :feature do
     fill_in 'Password confirmation', with: 'newpassword'
     fill_in 'Current password', with: '123456'
     click_button 'Update'
+    
     expect(page).to have_content("Your account has been updated successfully")
   end
 
