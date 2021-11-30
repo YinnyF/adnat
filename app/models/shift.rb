@@ -28,8 +28,22 @@ class Shift < ApplicationRecord
     '%.2f' % hours_worked_unrounded
   end
 
+  def sunday_premium_cost
+    if self.start.sunday? && self.finish.sunday? 
+      hours_worked_unrounded * hourly_rate
+    elsif self.start.sunday?
+      # if start on sunday and ends overnight
+      calculate_sunday_start_premium
+    elsif self.finish.sunday?
+      # if start saturday working overnight into sunday
+      calculate_sunday_end_premium
+    else
+      0
+    end
+  end
+
   def cost
-    cost = calculate_sunday_premium + (hours_worked_unrounded * hourly_rate)
+    cost = sunday_premium_cost + (hours_worked_unrounded * hourly_rate)
     '%.2f' % cost
   end
 
@@ -79,35 +93,28 @@ class Shift < ApplicationRecord
       errors.add(:finish, "Please check the break length") unless break_valid
     end
 
-    def calculate_sunday_premium
-      if self.start.sunday? && self.finish.sunday? 
-        hours_worked_unrounded * hourly_rate
-      elsif self.start.sunday?
-        # if start is a sunday but finish is not
-        minutes_on_sunday = (self.start.midnight + 1.day - self.start) / 60
+    def calculate_sunday_start_premium
+      minutes_on_sunday = (self.start.midnight + 1.day - self.start) / 60
 
-        if (shift_length_mins - minutes_on_sunday) < break_length
-          # reduce minutes on sunday for the break_length
-          minutes_on_sunday = shift_length_mins - break_length
-        end
+      if (shift_length_mins - minutes_on_sunday) < break_length
+        # reduce minutes on sunday for the break_length
+        minutes_on_sunday = shift_length_mins - break_length
+      end
 
-        hours_on_sunday = minutes_on_sunday / 60
+      hours_on_sunday = minutes_on_sunday / 60
+      hours_on_sunday * hourly_rate
+    end
+
+    def calculate_sunday_end_premium
+      minutes_on_sunday = (self.finish - self.finish.beginning_of_day) / 60
+
+      if minutes_on_sunday > break_length
+        hours_on_sunday = (minutes_on_sunday - break_length) / 60
         hours_on_sunday * hourly_rate
-        
-      elsif self.finish.sunday?
-        # if start is not a sunday but finish is
-        minutes_on_sunday = (self.finish - self.finish.beginning_of_day) / 60
-
-        if minutes_on_sunday > break_length
-          hours_on_sunday = (minutes_on_sunday - break_length) / 60
-          hours_on_sunday * hourly_rate
-        else
-          # if the break_length exceeds their mins worked on sunday then they get nothing
-          0
-        end
-
       else
+        # if the break_length exceeds their mins worked on sunday then they get nothing
         0
       end
     end
+
 end
