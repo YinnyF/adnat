@@ -3,8 +3,8 @@ class MembershipsController < ApplicationController
   before_action :set_organisation
   
   def create
-    # TODO: refactor here?
     @membership = Membership.new(user_id: current_user.id, organisation_id: @organisation.id)
+    
     if @membership.save
         flash[:notice] = "Joined #{@organisation.name}"
     else
