@@ -1,10 +1,10 @@
 # Adnat (Ruby on Rails Challenge)
 
-Ruby version: 2.7.4
-Rails version: 6.1.4
-Database: PostgreSQL
-Testing: RSpec, Capybara
-Other Gems: Devise
+* Ruby version: 2.7.4
+* Rails version: 6.1.4
+* Database: PostgreSQL
+* Testing: RSpec, Capybara
+* Other Gems: Devise
 
 ## Usage
 
@@ -74,3 +74,30 @@ bin/rails server
 - ⬜️  (7) Multiple breaks
 - ⬜️  (8) Multiple organisations
 - ⬜️  (10) JavaScript enhancements
+
+## Overview of my approach
+* Set up Rails project
+* Set up Devise User model (I did not set up mailers or admin accounts)
+* Implemented User log in, sign up, sign out, edit features in the views
+* Added a custom field `name` to the Devise user model
+* Wrote feature tests and unit tests from this point (I found it was especially helpful when refactoring)
+* Created some web helpers for testing
+* Created `Organisation` model with model associations and validations
+* Created `Membership` model that handles user memberships to organisations, added associations and validations
+* Implemented the features for organisations as described in the spec
+* Created `Shift` scaffold, added associations and validations
+* Adjusted the `Shift` model to display shifts from the database in the required format (unit tested)
+* Implemented the shift features as described in the spec, the create shift form appears in the table too
+* Set a validation on `break_length` to be between 0 and 720 minutes (12 hours)
+* Set defaults and 15 min increments for shifts for better user experience
+* Worked on some more optional features
+* Tidy up and refactoring
+
+## TODO/Improvements
+* significant chunk of logic for creating and updating shifts is currently sitting in `ShiftsController` which is not ideal, unsure how to delegate this to the model
+* look into FactoryBot gem which seems super popular online
+* seek feedback for: deleting shifts when a user leaves an org
+* seek feedback for: deleting shifts when an org is deleted
+* any feedback :)
+
+Thanks! Any questions please let me know!
