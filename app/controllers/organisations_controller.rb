@@ -52,6 +52,8 @@ class OrganisationsController < ApplicationController
 
   # DELETE /organisations/1 or /organisations/1.json
   def destroy
+    find_memberships_and_shifts_and_delete
+
     @organisation.destroy
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Organisation was successfully destroyed." }
@@ -75,5 +77,12 @@ class OrganisationsController < ApplicationController
       
       # TODO: what if they already belong to an org?
       @membership.save
+    end
+
+    def find_memberships_and_shifts_and_delete
+      Membership.where(organisation_id: @organisation.id).each do |membership| 
+        Shift.where(user_id: membership.user_id).delete_all
+        membership.destroy
+      end
     end
 end
