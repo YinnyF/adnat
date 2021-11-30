@@ -29,11 +29,9 @@ class Shift < ApplicationRecord
   end
 
   def cost
-    # get the hourly rate for the user
-    hourly_rate = self.user.membership.organisation.hourly_rate
-    # hours worked * hourly rate
-    # hourly rate is defined via user's org
-    '%.2f' % (hours_worked_unrounded * hourly_rate)
+    premium = calculate_premium
+    cost = premium + (hours_worked_unrounded * hourly_rate)
+    '%.2f' % cost
   end
 
   private
@@ -52,6 +50,10 @@ class Shift < ApplicationRecord
     def hours_worked_unrounded
       # break is defined in minutes
       (shift_length_mins-break_length.to_i)/60
+    end
+
+    def hourly_rate
+      self.user.membership.organisation.hourly_rate
     end
 
     def dates_valid
@@ -76,5 +78,37 @@ class Shift < ApplicationRecord
 
     def break_length_check
       errors.add(:finish, "Please check the break length") unless break_valid
+    end
+
+    def calculate_premium
+      if self.start.sunday? && self.finish.sunday? 
+        hours_worked_unrounded * hourly_rate
+      elsif self.start.sunday?
+        # if start is a sunday but finish is not
+        minutes_on_sunday = (self.start.midnight + 1.day - self.start) / 60
+
+        if (shift_length_mins - minutes_on_sunday) < break_length
+          # reduce minutes on sunday for the break_length
+          minutes_on_sunday = shift_length_mins - break_length
+        end
+
+        hours_on_sunday = minutes_on_sunday / 60
+        hours_on_sunday * hourly_rate
+        
+      elsif self.finish.sunday?
+        # if start is not a sunday but finish is
+        minutes_on_sunday = (self.finish - self.finish.beginning_of_day) / 60
+
+        if minutes_on_sunday > break_length
+          hours_on_sunday = (minutes_on_sunday - break_length) / 60
+          hours_on_sunday * hourly_rate
+        else
+          # if the break_length exceeds their mins worked on sunday then they get nothing
+          0
+        end
+
+      else
+        0
+      end
     end
 end

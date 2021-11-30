@@ -84,11 +84,86 @@ RSpec.describe Shift, type: :model do
     expect(shift.hours_worked).to eq "0.50"
   end
 
-  it "can calculate the cost based on the org hourly rate" do
-    organisation = Organisation.create(name: "Test Org", hourly_rate: 12.00 )
-    membership = Membership.create(user_id: user.id, organisation_id: organisation.id)
+  context "#costs" do
+    before do
+      organisation = Organisation.create(name: "Test Org", hourly_rate: 10.00 )
+      membership = Membership.create(user_id: user.id, organisation_id: organisation.id)
+    end
+    
+    let(:start_time) { DateTime.new(2021,01,01,9,0) }
+    let(:finish_time) { DateTime.new(2021,01,01,10,0) }
+    let(:shift) { described_class.new(start: start_time, finish: finish_time, break_length: 0, user_id: user.id) }
 
-    expect(shift.cost).to eq "12.00"
+    it "can calculate the cost based on the org hourly rate" do
+      expect(shift.cost).to eq "10.00"
+    end
+    
+    it "can calculate with a break" do
+      shift.break_length = 30
+
+      expect(shift.cost).to eq "5.00"
+    end
+
+    it "can calculate an overnight shift" do
+      shift.finish = DateTime.new(2021,01,02,9,0)
+
+      expect(shift.cost).to eq "240.00"
+    end
+
+    it "can calculate a sunday (2x) shift" do
+      shift.start = DateTime.new(2021,11,28,9,0)
+      shift.finish = DateTime.new(2021,11,28,17,0)
+      shift.break_length = 60
+
+      expect(shift.cost).to eq "140.00"
+    end
+
+    it "can calculate a sunday (2x) overnight shift" do
+      shift.start = DateTime.new(2021,11,28,22,0)
+      shift.finish = DateTime.new(2021,11,29,2,0)
+
+      expect(shift.cost).to eq "60.00"
+    end
+
+    it "can calculate a sunday (2x) overnight shift with break - example 1" do
+      shift.start = DateTime.new(2021,11,28,22,0)
+      shift.finish = DateTime.new(2021,11,29,3,0)
+      shift.break_length = 60
+
+      expect(shift.cost).to eq "60.00"
+    end
+
+    it "can calculate a sunday (2x) overnight shift with break - example 2" do
+      shift.start = DateTime.new(2021,11,28,17,0)
+      shift.finish = DateTime.new(2021,11,29,2,0)
+      shift.break_length = 120
+
+      expect(shift.cost).to eq "140.00"
+    end
+
+    it "can calculate a sunday (2x) overnight shift with break - example 3" do
+      shift.start = DateTime.new(2021,11,28,21,0)
+      shift.finish = DateTime.new(2021,11,29,1,0)
+      shift.break_length = 120
+
+      expect(shift.cost).to eq "40.00"
+    end
+
+    it "can calculate a saturday overnight shift" do
+      shift.start = DateTime.new(2021,11,27,22,0)
+      shift.finish = DateTime.new(2021,11,28,1,0)
+
+      expect(shift.cost).to eq "40.00"
+    end
+
+    it "can calculate a saturday overnight shift - with break" do
+      shift.start = DateTime.new(2021,11,27,22,0)
+      shift.finish = DateTime.new(2021,11,28,2,0)
+      shift.break_length = 60
+
+      expect(shift.cost).to eq "40.00"
+    end
+
   end
 
 end

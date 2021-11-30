@@ -66,11 +66,11 @@ bin/rails server
 - ✅  (1) User details: Allow users to change their own name, email address, or password
 - ✅  (2) Modifying/Deleting shifts: Allow users to modify or delete their own shifts
 - ✅  (5) Overnight shifts
+- ✅  (6) Penalty rates on Sundays
 - ✅  (9) Functional or Unit tests - **attempted but not exhaustive**
 
 - ⬜️  (3) Departed Employee Shift Storage
 - ⬜️  (4) Filtering shifts
-- ⬜️  (6) Penalty rates on Sundays
 - ⬜️  (7) Multiple breaks
 - ⬜️  (8) Multiple organisations
 - ⬜️  (10) JavaScript enhancements
