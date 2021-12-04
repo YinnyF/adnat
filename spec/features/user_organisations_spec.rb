@@ -2,11 +2,9 @@ require 'rails_helper'
 
 RSpec.feature "User Organisations", type: :feature do
   background do
-    Organisation.create(name: org_name, hourly_rate: 10.00)
+    Organisation.create(name: "Org Name", hourly_rate: 10.00)
     log_in
   end
-
-  let(:org_name) { 'Name 1' }
 
   scenario "user without an org is prompted to join/create an org" do
     expect(page).to have_content("You aren't a member of any organisations.")
@@ -15,7 +13,7 @@ RSpec.feature "User Organisations", type: :feature do
   end
 
   scenario "user without an org can edit an existing organisation" do
-    expect(page).to have_content("#{org_name}")
+    expect(page).to have_content("Org Name")
     click_link 'Edit'
     new_org_name = 'Name Changed'
     new_org_rate = 11.00
@@ -42,12 +40,12 @@ RSpec.feature "User Organisations", type: :feature do
   scenario "user without an org can join an existing organisation" do
     click_link("Join", :match => :first)
 
-    expect(page).to have_content("Joined #{org_name}")
+    expect(page).to have_content("Joined Org Name")
   end
 
   scenario "user can leave an organisation" do
     click_link("Join", :match => :first)
-    expect(page).to have_content("#{org_name}")
+    expect(page).to have_content("Org Name")
     click_link("Leave")
 
     expect(page).to have_content("Successfully left the organisation.")
