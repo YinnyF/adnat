@@ -61,7 +61,7 @@ RSpec.describe Shift, type: :model do
   end
 
   it "can retrieve the date in string format %d/%m/%Y" do
-    expect(shift.shift_date).to eq "01/01/2021"
+    expect(shift.start_date).to eq "01/01/2021"
   end
 
   it "can retrieve the start time in string format %I:%M %p" do
