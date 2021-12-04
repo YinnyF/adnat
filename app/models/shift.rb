@@ -12,15 +12,15 @@ class Shift < ApplicationRecord
   end
 
   def start_date
-    parse_start.strftime("%d/%m/%Y")
+    start.strftime("%d/%m/%Y")
   end
 
   def start_time
-    parse_start.strftime("%I:%M %p")
+    start.strftime("%I:%M %p")
   end
 
   def finish_time
-    parse_finish.strftime("%I:%M %p")
+    finish.strftime("%I:%M %p")
   end
 
   def hours_worked
@@ -48,14 +48,6 @@ class Shift < ApplicationRecord
   end
 
   private
-    def parse_start
-      DateTime.parse("#{start}")
-    end
-
-    def parse_finish
-      DateTime.parse("#{finish}")
-    end
-
     def shift_length_mins
       (finish - start) / 60
     end
