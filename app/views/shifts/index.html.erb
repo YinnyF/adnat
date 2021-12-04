@@ -56,15 +56,15 @@
         </div></td>
 
         <td><div class="field">
-          <%= form.time_select :start, :ignore_date => true, minute_step: 15 %>
+          <%= form.time_select :start, ignore_date: true, minute_step: 15 %>
         </div></td>
 
         <td><div class="field">
-          <%= form.time_select :finish, :ignore_date => true, minute_step: 15 %>
+          <%= form.time_select :finish, ignore_date: true, minute_step: 15 %>
         </div></td>
 
         <td><div class="field">
-          <%= form.number_field :break_length, :value => 0 %>
+          <%= form.number_field :break_length, value: 0 %>
         </div></td>
 
         <td colspan="3"><div class="actions">
