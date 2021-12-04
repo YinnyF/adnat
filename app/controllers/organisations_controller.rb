@@ -1,5 +1,6 @@
 class OrganisationsController < ApplicationController
   before_action :set_organisation, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   # GET /organisations or /organisations.json
   def index
@@ -25,7 +26,7 @@ class OrganisationsController < ApplicationController
 
     respond_to do |format|
       if @organisation.save
-        join(@organisation)
+        @organisation.users << current_user
 
         format.html { redirect_to root_path, notice: "Organisation was successfully created." }
         format.json { render :show, status: :created, location: @organisation }
@@ -70,12 +71,6 @@ class OrganisationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def organisation_params
       params.require(:organisation).permit(:name, :hourly_rate)
-    end
-
-    def join(organisation)
-      @membership = Membership.new(user_id: current_user.id, organisation_id: organisation.id)
-      
-      @membership.save
     end
 
     def find_memberships_and_shifts_and_delete

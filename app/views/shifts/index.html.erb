@@ -33,7 +33,7 @@
         <% if shift.user.membership.organisation_id == current_user.membership.organisation_id %>
         <tr>
           <td><%= shift.employee_name %></td>
-          <td><%= shift.shift_date %></td>
+          <td><%= shift.start_date %></td>
           <td><%= shift.start_time %></td>
           <td><%= shift.finish_time %></td>
           <td><%= shift.break_length %></td>
@@ -56,15 +56,15 @@
         </div></td>
 
         <td><div class="field">
-          <%= form.time_select :start, :ignore_date => true, minute_step: 15 %>
+          <%= form.time_select :start, ignore_date: true, minute_step: 15 %>
         </div></td>
 
         <td><div class="field">
-          <%= form.time_select :finish, :ignore_date => true, minute_step: 15 %>
+          <%= form.time_select :finish, ignore_date: true, minute_step: 15 %>
         </div></td>
 
         <td><div class="field">
-          <%= form.number_field :break_length, :value => 0 %>
+          <%= form.number_field :break_length, value: 0 %>
         </div></td>
 
         <td colspan="3"><div class="actions">

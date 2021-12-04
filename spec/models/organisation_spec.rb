@@ -1,25 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Organisation, type: :model do
-  let(:organisation) { described_class.new(name: 'Test Name', hourly_rate: 11.00) }
-
   it { is_expected.to validate_presence_of(:name) }
 
   it { is_expected.to validate_presence_of(:hourly_rate) }
 
   it "has unique organisation names" do
+    organisation = described_class.new(name: 'Test Name', hourly_rate: 11.00)
     organisation.save
     duplicate_org = described_class.new(name: 'Test Name', hourly_rate: 11.00)
     expect(duplicate_org).not_to be_valid
   end
 
   it "creates a valid organisation object" do
+    organisation = described_class.new(name: 'Test Name', hourly_rate: 11.00)
     expect(organisation).to be_valid
     expect(organisation.name).to eq 'Test Name'
     expect(organisation.hourly_rate).to eq 11.00
   end
 
   it "should accept valid hourly rates" do
+    organisation = described_class.new(name: 'Test Name', hourly_rate: 11.00)
     valid_rates = [11.00, 11, 0.01, 999.99, "11", "11.11"]
 
     valid_rates.each do |valid_rate|
@@ -29,6 +30,7 @@ RSpec.describe Organisation, type: :model do
   end
 
   it "shouldn't accept invalid hourly rates" do
+    organisation = described_class.new(name: 'Test Name', hourly_rate: 11.00)
     invalid_rates = [0.001, "notarate"]
 
     invalid_rates.each do |invalid_rate|
