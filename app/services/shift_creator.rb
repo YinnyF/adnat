@@ -1,6 +1,7 @@
 class ShiftCreator < ApplicationService
-  def initialize(shift_params, user: nil)
+  def initialize(shift_params, shift, user: nil)
     @shift_params = shift_params
+    @shift = shift
     @user = user
   end
 
@@ -24,11 +25,16 @@ class ShiftCreator < ApplicationService
 
       finish_dt += 1.day if start_dt > finish_dt 
 
-      Shift.new(
+      @shift.assign_attributes(
         start: start_dt,
         finish: finish_dt,
         break_length: @shift_params[:break_length],
-        user_id: @user.id
       )
+
+      assign_user
+    end
+
+    def assign_user
+      @shift.assign_attributes(user: @user) if @user
     end
 end
